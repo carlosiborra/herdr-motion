@@ -1,0 +1,42 @@
+id = "herdr-motion"
+name = "HerdR Motion"
+version = "0.3.0"
+min_herdr_version = "0.9.5"
+description = "Smooth split-ratio effects when panes open, close, and resize"
+platforms = ["linux", "macos"]
+
+# One-shot: launches the background effects worker detached and returns at once.
+[[startup]]
+command = ["python3", "bin/herdr-motion", "--start"]
+
+[[actions]]
+id = "open"
+title = "Motion settings"
+contexts = ["global"]
+command = ["python3", "bin/herdr-motion", "--open"]
+
+[[panes]]
+id = "settings"
+title = "Motion"
+command = ["python3", "bin/herdr-motion", "--pick"]
+placement = "popup"
+width = 110
+height = 32
+
+[[actions]]
+id = "toggle"
+title = "Toggle pane effects"
+contexts = ["global"]
+command = ["python3", "bin/herdr-motion", "--toggle"]
+
+[[actions]]
+id = "next-style"
+title = "Next motion style"
+contexts = ["global"]
+command = ["python3", "bin/herdr-motion", "--next"]
+
+[[actions]]
+id = "stop"
+title = "Stop the effects worker"
+contexts = ["global"]
+command = ["python3", "bin/herdr-motion", "--stop"]
