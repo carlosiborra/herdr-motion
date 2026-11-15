@@ -49,17 +49,13 @@ Project page: <https://carlosiborra.github.io/herdr-motion/>
 
 Herdr 0.9.5 or newer, Python 3.9 or newer, macOS or Linux. Standard library only.
 
-## Install
+## Setup details
 
-```sh
-herdr plugin install carlosiborra/herdr-motion
-```
+After `herdr plugin install`, the startup hook launches the background worker the next time the Herdr server starts. To start it right away without restarting Herdr, run `herdr plugin action invoke carlosiborra.motion.start` (a no-op if a worker is already running).
 
-The startup hook launches the background worker the next time the Herdr server starts. To start it right away without restarting Herdr, run `herdr plugin action invoke carlosiborra.motion.start` (a no-op if a worker is already running).
+### More keybindings
 
-### Keybindings
-
-Add any of these to your Herdr `config.toml`:
+Besides the settings picker shown above, you can bind the toggle and style actions. Add any of these to your Herdr `config.toml`:
 
 ```toml
 [[keys.command]]
