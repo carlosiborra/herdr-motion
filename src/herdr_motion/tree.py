@@ -1,7 +1,7 @@
-"""HerdR split trees as exported by layout.export, and the ratio arithmetic on them.
+"""Herdr split trees as exported by layout.export, and the ratio arithmetic on them.
 
 Paths follow layout.set_split_ratio: booleans from the root, False for the
-first child and True for the second. HerdR clamps ratios to 0.1-0.9.
+first child and True for the second. Herdr clamps ratios to 0.1-0.9.
 """
 from typing import Any, Dict, List, Mapping, Optional, Tuple
 

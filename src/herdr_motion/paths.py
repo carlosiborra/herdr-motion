@@ -1,8 +1,8 @@
 """Where the plugin reads settings and keeps runtime files.
 
-HerdR sets HERDR_PLUGIN_CONFIG_DIR (settings), HERDR_PLUGIN_STATE_DIR (locks, pid, logs),
+Herdr sets HERDR_PLUGIN_CONFIG_DIR (settings), HERDR_PLUGIN_STATE_DIR (locks, pid, logs),
 HERDR_SOCKET_PATH and HERDR_PLUGIN_ID for plugin commands. The fallbacks below apply only when the
-plugin is run by hand outside HerdR, and follow XDG_CONFIG_HOME / XDG_STATE_HOME.
+plugin is run by hand outside Herdr, and follow XDG_CONFIG_HOME / XDG_STATE_HOME.
 """
 import hashlib
 from dataclasses import dataclass
@@ -25,7 +25,7 @@ class Paths:
     config_dir: Path
     state_dir: Path
     socket: Path
-    herdr_config: Path  # HerdR's config.toml, read only for the theme colours of the picker
+    herdr_config: Path  # Herdr's config.toml, read only for the theme colours of the picker
 
     @property
     def settings(self) -> Path:
@@ -33,7 +33,7 @@ class Paths:
 
     @property
     def tag(self) -> str:
-        """One worker per HerdR server: sessions have their own sockets."""
+        """One worker per Herdr server: sessions have their own sockets."""
         return hashlib.sha1(str(self.socket).encode("utf-8")).hexdigest()[:12]
 
     @property

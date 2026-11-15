@@ -9,7 +9,7 @@ body:
   - type: input
     id: herdr
     attributes:
-      label: HerdR version
+      label: Herdr version
       description: Output of `herdr --version`
     validations:
       required: true
@@ -31,7 +31,7 @@ body:
     id: status
     attributes:
       label: Worker status
-      description: Run `python3 bin/herdr-motion --status` inside HerdR, from the plugin directory, and paste the output.
+      description: Run `python3 bin/herdr-motion --status` inside Herdr, from the plugin directory, and paste the output.
       render: text
   - type: textarea
     id: log

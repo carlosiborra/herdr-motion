@@ -1,9 +1,9 @@
-"""Resolve HerdR's theme the way HerdR does, so the picker matches the host UI.
+"""Resolve Herdr's theme the way Herdr does, so the picker matches the host UI.
 
-HerdR picks a built-in palette by [theme] name (or dark_name/light_name when
+Herdr picks a built-in palette by [theme] name (or dark_name/light_name when
 auto_switch is on), then layers [theme.custom] and the matching
 [theme.custom.dark] or [theme.custom.light] table on top. The built-in
-palettes below are the published values of the themes HerdR ships; tokens a
+palettes below are the published values of the themes Herdr ships; tokens a
 theme does not define fall back to its nearest equivalent.
 
 Bundled rather than imported from a sibling plugin so this plugin works alone.
@@ -116,7 +116,7 @@ def read_theme_tables(source: str) -> Dict[str, Dict[str, str]]:
 
 
 def system_appearance(env: Mapping[str, str]) -> str:
-    """Best-effort dark/light detection matching HerdR's auto_switch intent."""
+    """Best-effort dark/light detection matching Herdr's auto_switch intent."""
     forced = env.get("HERDR_LAYOUTS_APPEARANCE", "").lower()
     if forced in ("dark", "light"):
         return forced
@@ -164,7 +164,7 @@ def resolve_theme(source: str, env: Mapping[str, str], appearance: Optional[str]
     else:
         name = theme.get("name") or DEFAULT_THEME
     if name not in BUILTIN:
-        notes.append("unknown HerdR theme %r; using %s" % (name, DEFAULT_THEME))
+        notes.append("unknown Herdr theme %r; using %s" % (name, DEFAULT_THEME))
         name = DEFAULT_THEME
     colors = dict(BUILTIN[name])
     layers = [tables.get("theme.custom", {})]
@@ -257,7 +257,7 @@ class Palette:
         return self.mix("panel_bg", key, amount)
 
     def role(self, name: str) -> str:
-        """Semantic colours, all derived from HerdR theme tokens."""
+        """Semantic colours, all derived from Herdr theme tokens."""
         light = self.appearance == "light"
         roles = {
             "border": self.mix("panel_bg", "overlay0", 0.75 if light else 0.55),

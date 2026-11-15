@@ -8,7 +8,7 @@ herdr-motion --styles   list the motion styles
 herdr-motion --style N  switch to style N
 herdr-motion --next     switch to the next style
 herdr-motion --pick     the visual settings picker (what the popup runs)
-herdr-motion --open     open the picker as a HerdR popup
+herdr-motion --open     open the picker as a Herdr popup
 herdr-motion --worker   the background worker itself (spawned by --start; not for direct use)
 """
 import json
@@ -67,7 +67,7 @@ def run_worker(paths: Paths, env: Mapping[str, str], sleep=time.sleep) -> int:
                 if attempt < CONNECT_ATTEMPTS and not stopped:
                     sleep(0.5 * attempt)
         if subscription is None:
-            log("no HerdR server to serve; exiting", True)
+            log("no Herdr server to serve; exiting", True)
             return 0
         try:
             daemon.run(subscription, lambda: bool(stopped), wake_read)
@@ -92,7 +92,7 @@ def main(argv=None, environ: Optional[Mapping[str, str]] = None) -> int:
         print("herdr-motion %s" % __version__)
         return 0
     if sys.version_info < (3, 9):
-        print("HerdR Motion requires Python 3.9 or newer", file=sys.stderr)
+        print("Herdr Motion requires Python 3.9 or newer", file=sys.stderr)
         return 2
     paths = resolve(env)
     config = ConfigFile(paths.settings)
@@ -103,9 +103,9 @@ def main(argv=None, environ: Optional[Mapping[str, str]] = None) -> int:
     if "--stop" in args:
         if lifecycle.stop(paths):
             Daemon(Client(paths.socket), config, FlashStore(paths.flashes)).clear_flashes()
-            print("HerdR Motion worker stopped")
+            print("Herdr Motion worker stopped")
             return 0
-        print("HerdR Motion worker did not exit; see %s" % paths.log, file=sys.stderr)
+        print("Herdr Motion worker did not exit; see %s" % paths.log, file=sys.stderr)
         return 1
     if "--status" in args:
         pid = lifecycle.worker_pid(paths)
@@ -116,7 +116,7 @@ def main(argv=None, environ: Optional[Mapping[str, str]] = None) -> int:
     if "--toggle" in args:
         current = config.get()
         config.update(enabled=not current.enabled)
-        print("HerdR Motion effects %s" % ("on" if not current.enabled else "off"))
+        print("Herdr Motion effects %s" % ("on" if not current.enabled else "off"))
         return 0
     if "--open" in args:
         # Opens only this plugin's own popup pane; no existing pane is touched.
@@ -124,13 +124,13 @@ def main(argv=None, environ: Optional[Mapping[str, str]] = None) -> int:
         completed = subprocess.run([binary, "plugin", "pane", "open", "--plugin", paths.plugin_id,
                                     "--entrypoint", "settings", "--focus"], capture_output=True, text=True)
         if completed.returncode != 0:
-            print("HerdR Motion could not open its settings popup: %s"
+            print("Herdr Motion could not open its settings popup: %s"
                   % (completed.stderr or completed.stdout).strip(), file=sys.stderr)
             return 1
         return 0
     if "--pick" in args:
         if not (sys.stdin.isatty() and sys.stdout.isatty()):
-            print("The HerdR Motion picker needs an interactive terminal; bind it as a popup.", file=sys.stderr)
+            print("The Herdr Motion picker needs an interactive terminal; bind it as a popup.", file=sys.stderr)
             return 2
         from .picker import Picker
         from .terminal import Terminal, TerminalExit
@@ -152,12 +152,12 @@ def main(argv=None, environ: Optional[Mapping[str, str]] = None) -> int:
             print("unknown style %r; choose one of: %s" % (name, ", ".join(names())), file=sys.stderr)
             return 2
         config.set_style(name)
-        print("HerdR Motion style: %s" % name)
+        print("Herdr Motion style: %s" % name)
         return 0
     if "--next" in args:
         name = next_name(config.get().style)
         config.set_style(name)
-        print("HerdR Motion style: %s" % name)
+        print("Herdr Motion style: %s" % name)
         return 0
     print("usage: herdr-motion --start | --stop | --status | --toggle | --next | --style NAME | --styles"
           " | --pick | --open | --version", file=sys.stderr)

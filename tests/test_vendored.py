@@ -6,7 +6,7 @@ from pathlib import Path
 SRC = Path(__file__).resolve().parent.parent / "src" / "herdr_motion"
 
 VENDORED_SHA256 = {
-    "theme.py": "8415c9f04ed162db44bee68753954b58b3229a1a307b26b3f0100d51db482c24",
+    "theme.py": "24bececb50ce273a9d348a12774a861577460fa37129c8e1ad73289399d1c035",
     "terminal.py": "35fcaf6dd4e8581622e01b9bca0e67c221848d130c11c87e5f17831d65c7741d",
 }
 

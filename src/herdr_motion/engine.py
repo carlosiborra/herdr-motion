@@ -1,6 +1,6 @@
 """Decide which effect a layout change deserves. Pure: layouts in, actions out.
 
-HerdR reports every change as a fresh layout for the tab. Comparing it with
+Herdr reports every change as a fresh layout for the tab. Comparing it with
 the previous one tells what happened:
 
 - a pane appeared      grow it open from its edge

@@ -1,4 +1,4 @@
-"""HerdR socket API: one connection per request, plus a long-lived event subscription.
+"""Herdr socket API: one connection per request, plus a long-lived event subscription.
 
 The ``herdr`` CLI has no generic API call, and the three things this plugin needs (the
 ``events.subscribe`` stream, ``layout.export`` / ``layout.set_split_ratio``, and
@@ -63,7 +63,7 @@ class Client:
         return [tab["tab_id"] for tab in tabs or [] if isinstance(tab, dict) and isinstance(tab.get("tab_id"), str)]
 
     def plugin_enabled(self, plugin_id: str) -> bool:
-        """False only when HerdR lists no such plugin, or lists it disabled."""
+        """False only when Herdr lists no such plugin, or lists it disabled."""
         plugins = self.call("plugin.list", {"plugin_id": plugin_id}).get("plugins")
         for plugin in plugins if isinstance(plugins, list) else []:
             if isinstance(plugin, dict) and plugin.get("plugin_id") == plugin_id:
@@ -73,7 +73,7 @@ class Client:
     def title(self, pane_id: str, text: Optional[str], ttl_ms: Optional[int] = None) -> None:
         """Set or clear this plugin's own title for a pane; titles reported by other sources are untouched.
 
-        ``ttl_ms`` makes HerdR drop the title by itself, so a flash cannot outlive a dead worker.
+        ``ttl_ms`` makes Herdr drop the title by itself, so a flash cannot outlive a dead worker.
         """
         params: dict = {"pane_id": pane_id, "source": SOURCE}
         params.update({"title": text} if text else {"clear_title": True})

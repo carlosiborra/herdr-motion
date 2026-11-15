@@ -1,6 +1,6 @@
 id = "carlosiborra.motion"
-name = "HerdR Motion"
-version = "0.3.1"
+name = "Herdr Motion"
+version = "0.3.2"
 min_herdr_version = "0.9.5"
 description = "Smooth split-ratio effects when panes open, close, and resize"
 platforms = ["linux", "macos"]

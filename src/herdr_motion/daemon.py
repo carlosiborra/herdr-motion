@@ -7,7 +7,7 @@ animating there is no timer at all, so an idle worker costs no wakeups.
 One thread multiplexes the stream and every running animation, so effects in different tabs play
 at once and a new change in a tab replaces its running animation from wherever it is.
 
-HerdR batches layout events about every 100 ms, so a new pane can appear at full size for up to
+Herdr batches layout events about every 100 ms, so a new pane can appear at full size for up to
 that long before its grow starts. That latency is accepted: the alternative was polling.
 """
 import json
@@ -28,7 +28,7 @@ from .tree import leaves
 MIN_DELTA = 0.004
 # How often, at most, an event triggers a check that this plugin is still installed and enabled.
 PLUGIN_CHECK_EVERY = 5.0
-# HerdR drops a flash title by itself this long after the worker meant to clear it.
+# Herdr drops a flash title by itself this long after the worker meant to clear it.
 FLASH_GRACE_MS = 1500
 
 

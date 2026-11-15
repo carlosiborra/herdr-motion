@@ -120,7 +120,7 @@ def preview_boxes(width: int, height: int, widths: Sequence[float]) -> List[Tupl
 
 def preview(width: int, height: int, widths: Sequence[float], names_: Sequence[str], flashing: bool,
             palette: Palette, mark: str) -> List[str]:
-    """A miniature tab drawn the way HerdR draws panes: shared borders, filled interiors."""
+    """A miniature tab drawn the way Herdr draws panes: shared borders, filled interiors."""
     boxes = preview_boxes(width, height, widths)
     links: List[List[set]] = [[set() for _ in range(width)] for _ in range(height)]
     for _, left, top, right, bottom in boxes:

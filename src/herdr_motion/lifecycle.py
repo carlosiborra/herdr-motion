@@ -2,7 +2,7 @@
 
 The startup hook only calls ``start``: it spawns the worker fully detached (its own session, stdio
 sent to a log file in the plugin state directory) and returns at once. The worker holds an
-exclusive flock on a lock file keyed by the socket path, so there is one worker per HerdR server,
+exclusive flock on a lock file keyed by the socket path, so there is one worker per Herdr server,
 and writes its pid next to it. ``stop`` signals only a pid whose lock is actually held.
 """
 import fcntl
