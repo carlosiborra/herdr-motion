@@ -31,7 +31,7 @@ HerdR 0.9.5 or newer, Python 3.9 or newer, macOS or Linux. Standard library only
 herdr plugin install carlosiborra/herdr-motion
 ```
 
-The startup hook launches the background worker the next time the HerdR server starts. To start it right away without restarting HerdR, run the plugin's startup command once: `python3 bin/herdr-motion --start` from the plugin directory.
+The startup hook launches the background worker the next time the HerdR server starts. To start it right away without restarting HerdR, run `herdr plugin action invoke carlosiborra.motion.start` (a no-op if a worker is already running).
 
 ### Keybindings
 

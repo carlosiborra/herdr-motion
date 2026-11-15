@@ -36,6 +36,12 @@ contexts = ["global"]
 command = ["python3", "bin/herdr-motion", "--next"]
 
 [[actions]]
+id = "start"
+title = "Start the effects worker now"
+contexts = ["global"]
+command = ["python3", "bin/herdr-motion", "--start"]
+
+[[actions]]
 id = "stop"
 title = "Stop the effects worker"
 contexts = ["global"]

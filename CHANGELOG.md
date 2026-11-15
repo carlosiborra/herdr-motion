@@ -2,6 +2,7 @@
 
 ## 0.3.1
 
+- New `start` action (`carlosiborra.motion.start`): starts the worker after an install or update without restarting the HerdR server. It is a no-op when a worker already serves the session.
 - Added a demo GIF (`docs/demo.gif`) and README badges.
 - Added bug report and feature request issue templates.
 - Added `tests/test_vendored.py`, a sha256 drift guard for the vendored `theme.py` and `terminal.py`, documented in CONTRIBUTING.
