@@ -81,12 +81,15 @@ class ConfigFile:
 
     def __init__(self, path: Path) -> None:
         self.path = path
-        self._stamp: Optional[float] = None
+        self._stamp: Optional[tuple] = None
         self._config = Config()
 
     def get(self) -> Config:
         try:
-            stamp = self.path.stat().st_mtime
+            info = self.path.stat()
+            # mtime alone misses quick successive writes on filesystems with coarse
+            # timestamps; atomic replace also changes the inode, and sizes usually differ.
+            stamp = (info.st_ino, info.st_mtime_ns, info.st_size)
         except OSError:
             stamp = None
         if stamp != self._stamp:
@@ -122,6 +125,7 @@ class ConfigFile:
                 json.dump(value, handle, indent=2)
                 handle.write("\n")
             os.replace(name, self.path)
+            self._stamp = ()  # never equal to a real stamp: re-read on the next get()
         finally:
             if os.path.exists(name):
                 os.unlink(name)

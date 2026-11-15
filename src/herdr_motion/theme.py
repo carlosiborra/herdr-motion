@@ -10,6 +10,7 @@ Bundled rather than imported from a sibling plugin so this plugin works alone.
 """
 import os
 import re
+import shutil
 import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -130,6 +131,15 @@ def system_appearance(env: Mapping[str, str]) -> str:
             result = subprocess.run(["defaults", "read", "-g", "AppleInterfaceStyle"],
                                     capture_output=True, text=True, timeout=0.5, check=False)
             return "dark" if "dark" in result.stdout.lower() else "light"
+        except (OSError, subprocess.SubprocessError):
+            pass
+    elif shutil.which("gsettings"):
+        # GNOME and most GTK desktops publish the preferred scheme here.
+        try:
+            result = subprocess.run(["gsettings", "get", "org.gnome.desktop.interface", "color-scheme"],
+                                    capture_output=True, text=True, timeout=0.5, check=False)
+            if "prefer-light" in result.stdout:
+                return "light"
         except (OSError, subprocess.SubprocessError):
             pass
     return "dark"
