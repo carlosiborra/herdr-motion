@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Herdr Motion: Panes that ease into place</title>
+<meta name="description" content="Smooth split-ratio effects for Herdr. When a pane opens or closes, the panes around it glide to their new sizes instead of jumping.">
+<meta property="og:title" content="Herdr Motion">
+<meta property="og:description" content="Panes that ease into place. Smooth split-ratio effects for Herdr. When a pane opens or closes, the panes around it glide to their new sizes instead of jumping.">
+<meta property="og:image" content="https://carlosiborra.github.io/herdr-motion/poster.png">
+<meta property="og:url" content="https://carlosiborra.github.io/herdr-motion/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#a52b72">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' rx='3' fill='none' stroke='%23a52b72' stroke-width='4'/%3E%3Cpath d='M16 4v24' stroke='%23a52b72' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,600..800&family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#eef1ea;--paper-2:#e3e8de;--ink:#18231d;--ink-2:#3f4c44;--rule:#9aa79d;--accent:#a52b72;--accent-soft:#f1d6e6;--code:#1b2620;--code-ink:#e8eee8}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 "IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--ink);text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:3px}
+a:hover{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0;gap:16px;flex-wrap:wrap}
+.herd{display:flex;gap:18px;flex-wrap:wrap;font-size:15px}
+.herd a{text-decoration:none;color:var(--ink-2);padding:2px 0;border-bottom:2px solid transparent}
+.herd a:hover{color:var(--ink);border-color:var(--rule)}
+.herd a[aria-current]{color:var(--ink);border-color:var(--accent);font-weight:600}
+.mark{font:700 17px/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.01em;text-decoration:none}
+.hero{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:48px;align-items:center;padding:40px 0 72px}
+.name{font:800 clamp(64px,11vw,148px)/.86 "Bricolage Grotesque",sans-serif;letter-spacing:-.045em;margin:0 0 22px;font-variation-settings:"wdth" 88}
+.name span{color:var(--accent)}
+h1.title{font:600 clamp(24px,2.6vw,32px)/1.2 "Bricolage Grotesque",sans-serif;letter-spacing:-.015em;margin:0 0 14px;max-width:22ch}
+.lede{color:var(--ink-2);max-width:46ch;margin:0 0 28px}
+.install{display:flex;align-items:stretch;background:var(--code);color:var(--code-ink);border-radius:6px;max-width:100%;overflow:hidden}
+.install code{font:500 14px/1.5 "JetBrains Mono",ui-monospace,monospace;padding:12px 16px;white-space:normal;overflow-wrap:anywhere;flex:1;min-width:0;align-self:center}
+.install code::before{content:"$ ";color:#7f9087}
+.install .slug{white-space:nowrap}
+.copy{border:0;background:var(--accent);color:#fff;font:600 14px/1 "IBM Plex Sans",sans-serif;padding:0 18px;cursor:pointer;min-width:84px}
+.copy:hover{filter:brightness(1.08)}
+.meta{margin:14px 0 0;font-size:14px;color:var(--ink-2)}
+.meta a{margin-right:14px}
+/* Herdr-style pane: a bordered frame whose title sits in the top border */
+.pane{position:relative;border:2px solid var(--rule);border-radius:4px;padding:26px 24px 22px;background:transparent}
+.pane>.ptitle{position:absolute;top:-0.8em;left:16px;background:var(--paper);padding:0 8px;font:600 14px/1.6 "IBM Plex Sans",sans-serif;color:var(--ink-2)}
+.pane.focused{border-color:var(--accent)}
+.pane.focused>.ptitle{color:var(--accent)}
+.demo{padding:10px}
+.demo img{display:block;width:100%;height:auto;border-radius:2px;background:#1a1b26}
+section{padding:0 0 64px}
+h2{font:700 30px/1.15 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;margin:0 0 26px}
+.features{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 48px}
+.features h3{font:600 19px/1.3 "Bricolage Grotesque",sans-serif;margin:0 0 6px;padding-left:14px;border-left:4px solid var(--accent)}
+.features p{margin:0;color:var(--ink-2);padding-left:18px;max-width:52ch}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:start}
+ol.steps{margin:0;padding:0;list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 22px 46px}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--ink);font:700 15px/30px "Bricolage Grotesque",sans-serif;text-align:center}
+ol.steps p{margin:2px 0 8px}
+p code,li>p code{font:500 .88em/1 "JetBrains Mono",ui-monospace,monospace;background:var(--paper-2);padding:2px 5px;border-radius:3px}
+pre{margin:0;background:var(--code);color:var(--code-ink);border-radius:6px;padding:14px 16px;overflow-x:auto;font:500 13.5px/1.55 "JetBrains Mono",ui-monospace,monospace}
+table.keys{width:100%;border-collapse:collapse}
+.keys td{padding:9px 0;border-bottom:1px solid var(--paper-2);vertical-align:top}
+.keys td:first-child{width:38%;padding-right:16px}
+kbd{font:600 13.5px/1 "JetBrains Mono",ui-monospace,monospace;background:var(--paper-2);border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;padding:3px 7px;white-space:nowrap}
+.trust{max-width:68ch;color:var(--ink-2)}
+.trust p{margin:0 0 10px}
+.others{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.others a{display:block;text-decoration:none;padding:18px 18px 16px;border:2px solid var(--rule);border-radius:4px;transition:border-color .15s}
+.others a:hover{border-color:var(--o)}
+.others strong{display:block;font:700 22px/1.1 "Bricolage Grotesque",sans-serif;margin-bottom:6px;color:var(--o)}
+.others span{color:var(--ink-2);font-size:15px}
+footer{border-top:1px solid var(--rule);padding:24px 0 40px;font-size:14px;color:var(--ink-2)}
+footer p{margin:0 0 6px;max-width:80ch}
+@media (max-width:860px){.hero,.two{grid-template-columns:minmax(0,1fr);gap:36px}.features{grid-template-columns:minmax(0,1fr)}.others{grid-template-columns:minmax(0,1fr)}.hero{padding-top:16px}}
+@media (max-width:480px){.wrap{padding:0 16px}body{font-size:16px}.install code{font-size:13px;padding:14px 12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <a class="mark" href="https://github.com/carlosiborra/herdr-motion">herdr-motion</a>
+  <nav class="herd" aria-label="Herdr plugins by the same author"><a href="https://carlosiborra.github.io/herdr-find/">Find</a><a href="https://carlosiborra.github.io/herdr-fleet/">Fleet</a><a href="https://carlosiborra.github.io/herdr-layouts/">Layouts</a><a href="https://carlosiborra.github.io/herdr-motion/" aria-current="page">Motion</a><a href="https://github.com/carlosiborra/herdr-motion">GitHub</a></nav>
+</header>
+<main>
+<div class="hero">
+  <div>
+    <p class="name" aria-hidden="true">Motion<span>.</span></p>
+    <h1 class="title">Panes that ease into place.</h1>
+    <p class="lede">Smooth split-ratio effects for Herdr. When a pane opens or closes, the panes around it glide to their new sizes instead of jumping.</p>
+    <div class="install"><code id="cmd">herdr plugin install <span class="slug">carlosiborra/herdr-motion</span></code><button class="copy" type="button" data-copy="herdr plugin install carlosiborra/herdr-motion" aria-live="polite">Copy</button></div>
+    <p class="meta"><a href="https://github.com/carlosiborra/herdr-motion">Source on GitHub</a><a href="https://github.com/carlosiborra/herdr-motion/releases/latest">Latest release</a><a href="https://herdr.dev/tui/plugins/">Plugin marketplace</a></p>
+  </div>
+  <figure class="pane focused demo" style="margin:0">
+    <span class="ptitle">Motion in a Herdr session</span>
+    <picture>
+      <source srcset="poster.png" media="(prefers-reduced-motion: reduce)">
+      <img src="demo.gif" width="1100" height="640" alt="Recording of Herdr Motion in a terminal, using synthetic workspaces">
+    </picture>
+  </figure>
+</div>
+
+<section aria-labelledby="what">
+  <h2 id="what">What it does</h2>
+  <div class="features"><div><h3>Open</h3><p>A new pane slides open from its edge, and the row evens out as it grows: three columns end as thirds.</p></div><div><h3>Close</h3><p>The space a pane leaves is shared evenly between its neighbours, eased.</p></div><div><h3>Eight styles</h3><p>From snappy to cinematic, each previewed live in the settings picker before you choose.</p></div><div><h3>Quiet when idle</h3><p>An event-driven worker with no polling: zero wakeups while nothing changes.</p></div></div>
+</section>
+
+<section class="two">
+  <div aria-labelledby="install">
+    <h2 id="install">Install</h2>
+    <ol class="steps">
+      <li><p>Install it from GitHub. Herdr shows what it will run and asks first.</p><pre>herdr plugin install carlosiborra/herdr-motion</pre></li>
+      <li><p>Bind a key in <code>~/.config/herdr/config.toml</code>.</p><pre>[[keys.command]]
+key = &quot;prefix+shift+m&quot;
+type = &quot;plugin_action&quot;
+command = &quot;carlosiborra.motion.open&quot;</pre></li>
+      <li><p>Check and reload your config.</p><pre>herdr config check &amp;&amp; herdr server reload-config</pre></li>
+      <li><p>Start the effects worker now, or let it start with the next Herdr session.</p><pre>herdr plugin action invoke carlosiborra.motion.start</pre></li>
+    </ol>
+    <p class="meta">Needs Herdr 0.9.5 or newer and Python 3.9 or newer, on macOS or Linux.</p>
+  </div>
+  <div class="pane" aria-labelledby="keys">
+    <span class="ptitle" id="keys">Keys</span>
+    <table class="keys"><tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>Move between styles and switches</td></tr><tr><td><kbd>Enter</kbd></td><td>Choose a style</td></tr><tr><td><kbd>Space</kbd></td><td>Toggle an effect</td></tr><tr><td><kbd>◂</kbd> <kbd>▸</kbd></td><td>Change the speed</td></tr><tr><td><kbd>e</kbd></td><td>All effects on or off</td></tr><tr><td><kbd>q</kbd> <kbd>Esc</kbd></td><td>Close</td></tr></table>
+  </div>
+</section>
+
+<section aria-labelledby="trust">
+  <h2 id="trust">What it touches</h2>
+  <div class="trust">
+    <p>Listens to pane and layout events and changes split ratios. Never reads pane contents. Runs one small background worker that stops with the server or when the plugin is disabled.</p>
+    <p>Herdr plugins run with your user's permissions and are not sandboxed, so the full source is short, dependency-free Python you can read before installing.</p>
+  </div>
+</section>
+
+<section aria-labelledby="herd-h">
+  <h2 id="herd-h">The rest of the herd</h2>
+  <div class="others"><a href="https://carlosiborra.github.io/herdr-find/" style="--o:#b07800"><strong>Find</strong><span>Jump to any terminal by what&#x27;s in it.</span></a><a href="https://carlosiborra.github.io/herdr-fleet/" style="--o:#0b7374"><strong>Fleet</strong><span>See which agent needs you.</span></a><a href="https://carlosiborra.github.io/herdr-layouts/" style="--o:#3f43b8"><strong>Layouts</strong><span>Rearrange panes without losing a process.</span></a></div>
+</section>
+</main>
+<footer>
+  <p>MIT licensed. Report bugs and ideas in <a href="https://github.com/carlosiborra/herdr-motion/issues">GitHub issues</a>; report security problems privately through <a href="https://github.com/carlosiborra/herdr-motion/security/advisories/new">a security advisory</a>.</p>
+  <p>An independent community plugin for <a href="https://herdr.dev">Herdr</a>; not affiliated with the Herdr project.</p>
+</footer>
+</div>
+<script>
+document.querySelectorAll(".copy").forEach(function(b){b.addEventListener("click",function(){
+  var t=b.getAttribute("data-copy");
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent="Copied";},function(){
+    var r=document.createRange();r.selectNodeContents(document.getElementById("cmd"));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selected";});
+  setTimeout(function(){b.textContent="Copy";},1800);
+});});
+</script>
+</body>
+</html>
