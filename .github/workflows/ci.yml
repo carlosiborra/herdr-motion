@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.9", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Unit tests
+        run: python3 -m unittest discover -s tests -t .
+      - name: Manifest
+        if: matrix.python-version == '3.13'
+        run: |
+          python3 - <<'PY'
+          import tomllib
+          with open("herdr-plugin.toml", "rb") as handle:
+              manifest = tomllib.load(handle)
+          for key in ("id", "name", "version", "min_herdr_version", "description", "platforms"):
+              assert manifest.get(key), "missing " + key
+          assert manifest["id"] == "herdr-motion"
+          assert manifest["startup"][0]["command"][-1] == "--start"
+          assert {a["id"] for a in manifest["actions"]} >= {"open", "toggle", "next-style", "stop"}
+          assert any(p["id"] == "settings" for p in manifest["panes"])
+          print("manifest ok", manifest["version"])
+          PY
