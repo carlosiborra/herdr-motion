@@ -29,7 +29,7 @@ jobs:
               manifest = tomllib.load(handle)
           for key in ("id", "name", "version", "min_herdr_version", "description", "platforms"):
               assert manifest.get(key), "missing " + key
-          assert manifest["id"] == "herdr-motion"
+          assert manifest["id"] == "carlosiborra.motion"
           assert manifest["startup"][0]["command"][-1] == "--start"
           assert {a["id"] for a in manifest["actions"]} >= {"open", "toggle", "next-style", "stop"}
           assert any(p["id"] == "settings" for p in manifest["panes"])

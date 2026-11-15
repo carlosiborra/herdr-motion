@@ -27,11 +27,11 @@ class PathTests(unittest.TestCase):
         paths = resolve({"HOME": "/h", "XDG_CONFIG_HOME": "/x/config", "XDG_STATE_HOME": "/x/state"})
         self.assertEqual(paths.herdr_config, Path("/x/config/herdr/config.toml"))
         self.assertEqual(paths.socket, Path("/x/config/herdr/herdr.sock"))
-        self.assertEqual(paths.config_dir, Path("/x/config/herdr/plugins/config/herdr-motion"))
-        self.assertEqual(paths.state_dir, Path("/x/state/herdr/herdr-motion"))
+        self.assertEqual(paths.config_dir, Path("/x/config/herdr/plugins/config/carlosiborra.motion"))
+        self.assertEqual(paths.state_dir, Path("/x/state/herdr/carlosiborra.motion"))
         plain = resolve({"HOME": "/h"})
         self.assertEqual(plain.herdr_config, Path("/h/.config/herdr/config.toml"))
-        self.assertEqual(plain.state_dir, Path("/h/.local/state/herdr/herdr-motion"))
+        self.assertEqual(plain.state_dir, Path("/h/.local/state/herdr/carlosiborra.motion"))
 
     def test_relative_xdg_is_ignored_and_plugin_id_comes_from_the_environment(self):
         self.assertEqual(resolve({"HOME": "/h", "XDG_CONFIG_HOME": "rel"}).herdr_config, Path("/h/.config/herdr/config.toml"))

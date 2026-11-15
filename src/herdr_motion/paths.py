@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping
 
-DEFAULT_PLUGIN_ID = "herdr-motion"
+DEFAULT_PLUGIN_ID = "carlosiborra.motion"
 
 
 def _xdg(env: Mapping[str, str], variable: str, fallback: str) -> Path:

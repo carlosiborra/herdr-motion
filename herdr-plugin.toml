@@ -1,4 +1,4 @@
-id = "herdr-motion"
+id = "carlosiborra.motion"
 name = "HerdR Motion"
 version = "0.3.0"
 min_herdr_version = "0.9.5"

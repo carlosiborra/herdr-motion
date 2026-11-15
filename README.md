@@ -34,24 +34,24 @@ Add any of these to your HerdR `config.toml`:
 [[keys.command]]
 key = "prefix+shift+m"
 type = "plugin_action"
-command = "herdr-motion.open"      # the settings picker popup
+command = "carlosiborra.motion.open"      # the settings picker popup
 
 [[keys.command]]
 key = "prefix+alt+m"
 type = "plugin_action"
-command = "herdr-motion.toggle"    # effects on / off
+command = "carlosiborra.motion.toggle"    # effects on / off
 
 [[keys.command]]
 key = "prefix+alt+n"
 type = "plugin_action"
-command = "herdr-motion.next-style"
+command = "carlosiborra.motion.next-style"
 ```
 
 The plugin binds no keys itself; pick any free keys.
 
 ## The settings picker
 
-Run **Motion settings** (`herdr-motion.open`). Styles are on the left; a miniature tab on the right plays the highlighted style on a loop (a pane opens and the row evens out, a pane closes, two panes swap) so you can compare them before choosing. Below the styles are switches for each effect and the speed. Colours follow your HerdR theme.
+Run **Motion settings** (`carlosiborra.motion.open`). Styles are on the left; a miniature tab on the right plays the highlighted style on a loop (a pane opens and the row evens out, a pane closes, two panes swap) so you can compare them before choosing. Below the styles are switches for each effect and the speed. Colours follow your HerdR theme.
 
 | Key | Action |
 | --- | --- |
@@ -81,7 +81,7 @@ From a shell: list with `bin/herdr-motion --styles`, switch with `--style NAME`,
 
 ## Settings
 
-`motion.json` in the plugin config directory (`HERDR_PLUGIN_CONFIG_DIR`; `herdr plugin config-dir herdr-motion` prints it). Every key is optional. The style supplies the timing keys; writing one here overrides the style.
+`motion.json` in the plugin config directory (`HERDR_PLUGIN_CONFIG_DIR`; `herdr plugin config-dir carlosiborra.motion` prints it). Every key is optional. The style supplies the timing keys; writing one here overrides the style.
 
 | Key | Default | Meaning |
 | --- | --- | --- |
@@ -102,7 +102,7 @@ The `[[startup]]` hook is a one-shot command: `bin/herdr-motion --start` spawns 
 | Command | What it does |
 | --- | --- |
 | `--start` | Launch the worker detached and return (what HerdR runs at startup) |
-| `--stop` | Stop the worker and clear any flash titles it set (also the `herdr-motion.stop` action) |
+| `--stop` | Stop the worker and clear any flash titles it set (also the `carlosiborra.motion.stop` action) |
 | `--status` | Print JSON: running or stopped, pid, log path, effective settings |
 
 Lifecycle:
@@ -110,7 +110,7 @@ Lifecycle:
 - **One worker per HerdR server.** It holds an exclusive lock keyed by the socket path. A second start finds the lock held and exits; a start during a live handoff waits up to 5 seconds for the previous worker to leave.
 - **Files** live in `HERDR_PLUGIN_STATE_DIR`: `worker-<id>.lock`, `worker-<id>.pid`, `flashes-<id>.json` and `worker.log` (rotated at 256 KiB). Settings live in `HERDR_PLUGIN_CONFIG_DIR`.
 - **It exits on its own** when the event stream closes (the server stopped or restarted), on `SIGTERM`, `SIGINT` or `SIGHUP`, and when HerdR reports the plugin disabled or uninstalled. If the server is not reachable at start it retries for about 3 seconds and exits.
-- **Disabled-plugin detection** runs when an event arrives, at most once every 5 seconds, so a worker in a server that has gone completely quiet notices on the next event. `herdr-motion.stop` ends it immediately.
+- **Disabled-plugin detection** runs when an event arrives, at most once every 5 seconds, so a worker in a server that has gone completely quiet notices on the next event. `carlosiborra.motion.stop` ends it immediately.
 
 Run outside HerdR (for example from a shell), the paths fall back to `$XDG_CONFIG_HOME/herdr/plugins/config/herdr-motion` (settings), `$XDG_STATE_HOME/herdr/herdr-motion` (state) and `$XDG_CONFIG_HOME/herdr/herdr.sock` (socket), with `~/.config` and `~/.local/state` when the XDG variables are unset. The picker reads the HerdR theme from `HERDR_CONFIG_PATH`, or `$XDG_CONFIG_HOME/herdr/config.toml`.
 
@@ -131,8 +131,8 @@ The worker talks only to HerdR's local Unix socket (`HERDR_SOCKET_PATH`) and mak
 ## Update and uninstall
 
 ```sh
-herdr plugin action invoke herdr-motion.stop     # stop the worker first
-herdr plugin update                              # or: herdr plugin uninstall herdr-motion
+herdr plugin action invoke carlosiborra.motion.stop     # stop the worker first
+herdr plugin update                              # or: herdr plugin uninstall carlosiborra.motion
 ```
 
 The worker also exits by itself once HerdR reports the plugin disabled or removed, and the next server start launches the new version. Stopping first just makes the swap immediate. Move-flash titles carry a time limit, so none can outlive the worker.

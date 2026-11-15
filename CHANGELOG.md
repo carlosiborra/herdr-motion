@@ -2,6 +2,8 @@
 
 ## 0.3.0
 
+- Plugin id is now `carlosiborra.motion` (namespaced, so it cannot clash with other `herdr-motion` plugins). Bind actions as `carlosiborra.motion.<action>`.
+
 A redesign of how the plugin runs; effects themselves are unchanged.
 
 - **Startup is one-shot.** `[[startup]]` runs `bin/herdr-motion --start`, which launches the worker detached (own session, output to `worker.log` in the plugin state directory) and returns at once. Previously the hook ran the daemon in the foreground.
