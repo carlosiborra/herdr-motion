@@ -21,6 +21,7 @@ Python 3.9 is the minimum supported version, so avoid newer syntax and standard-
 - `src/herdr_motion/engine.py`, `tree.py`, `styles.py`, `config.py`: pure effect logic and settings.
 - `src/herdr_motion/picker.py`: the settings popup.
 - `src/herdr_motion/theme.py`, `terminal.py`: vendored, self-contained helpers (HerdR theme palettes, terminal handling). They are copied here deliberately so the plugin has no dependency on any other plugin; change them here.
+  `tests/test_vendored.py` pins their sha256; if you change one on purpose, update the hash there and add a `CHANGELOG.md` note, otherwise the test fails.
 
 ## Guidelines
 

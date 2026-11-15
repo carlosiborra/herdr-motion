@@ -1,0 +1,59 @@
+name: Bug report
+description: Something does not work as described
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please do not paste private pane titles, paths or other personal data; redact them first.
+  - type: input
+    id: herdr
+    attributes:
+      label: HerdR version
+      description: Output of `herdr --version`
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: macOS 15 / Ubuntu 24.04
+    validations:
+      required: true
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      description: Output of `python3 --version`
+    validations:
+      required: true
+  - type: textarea
+    id: status
+    attributes:
+      label: Worker status
+      description: Run `python3 bin/herdr-motion --status` inside HerdR, from the plugin directory, and paste the output.
+      render: text
+  - type: textarea
+    id: log
+    attributes:
+      label: worker.log tail
+      description: The last lines of `worker.log` in the plugin state directory.
+      render: text
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true

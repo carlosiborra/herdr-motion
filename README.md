@@ -1,5 +1,12 @@
 # HerdR Motion
 
+[![CI](https://github.com/carlosiborra/herdr-motion/actions/workflows/ci.yml/badge.svg)](https://github.com/carlosiborra/herdr-motion/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/carlosiborra/herdr-motion)](https://github.com/carlosiborra/herdr-motion/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![HerdR plugin](https://img.shields.io/badge/HerdR-plugin-orange)](https://herdr.dev/tui/plugins/)
+
+![HerdR Motion demo](docs/demo.gif)
+
 Smooth split-ratio effects for [HerdR](https://herdr.dev) panes. When a pane opens, closes or the row around it changes, the split eases to its new size instead of jumping.
 
 - **Open.** A new pane slides open from its edge. Split a pane that sits in a row of columns (or a column of rows) and the row evens out as it grows, so three columns end as thirds, not 50 / 25 / 25.

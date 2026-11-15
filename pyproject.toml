@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "herdr-motion"
-version = "0.3.0"
+version = "0.3.1"
 description = "Smooth split-ratio effects when HerdR panes open, close, and resize"
 readme = "README.md"
 license = { text = "MIT" }

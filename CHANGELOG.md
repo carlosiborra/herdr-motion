@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1
+
+- Added a demo GIF (`docs/demo.gif`) and README badges.
+- Added bug report and feature request issue templates.
+- Added `tests/test_vendored.py`, a sha256 drift guard for the vendored `theme.py` and `terminal.py`, documented in CONTRIBUTING.
+
 ## 0.3.0
 
 - Plugin id is now `carlosiborra.motion` (namespaced, so it cannot clash with other `herdr-motion` plugins). Bind actions as `carlosiborra.motion.<action>`.
